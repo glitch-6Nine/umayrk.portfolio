@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umair Afzaal — Designer, Developer & Copywriter</title>
+<meta name="description" content="Freelance designer, developer & copywriter. I build things that look good and convert.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a08;
+  --surface: #111110;
+  --surface2: #1a1a17;
+  --accent: #d4f050;
+  --accent-dim: #a8c038;
+  --white: #f0efe8;
+  --muted: #7a7a70;
+  --border: rgba(240,239,232,0.08);
+  --border-strong: rgba(240,239,232,0.15);
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--white);
+  font-family: 'Outfit', sans-serif; font-size: 16px; line-height: 1.6;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  width: 10px; height: 10px; background: var(--accent); border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s ease;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  width: 36px; height: 36px; border: 1px solid rgba(212,240,80,0.4); border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%); transition: all 0.12s ease;
+}
+
+/* Nav */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem; position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100; transition: background 0.3s;
+}
+nav.scrolled { background: rgba(10,10,8,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.nav-logo {
+  font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--white);
+  text-decoration: none; letter-spacing: 0.01em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; font-weight: 400; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--accent); color: var(--bg); padding: 9px 20px;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: background 0.2s;
+}
+.nav-cta:hover { background: #e8ff70; }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 0 3rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'Instrument Serif', serif; font-size: clamp(120px, 20vw, 260px);
+  color: rgba(240,239,232,0.025); white-space: nowrap; pointer-events: none;
+  user-select: none; letter-spacing: -0.02em; line-height: 1;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+}
+.hero-tag::before {
+  content: ''; width: 24px; height: 1px; background: var(--accent); display: block;
+}
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(48px, 8vw, 110px);
+  line-height: 1.0; letter-spacing: -0.02em;
+  margin-bottom: 2rem; max-width: 900px;
+  opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-bottom {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 2rem;
+  opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+}
+.hero-desc { font-size: 15px; color: var(--muted); max-width: 380px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 12px; align-items: center; }
+.btn-primary {
+  background: var(--accent); color: var(--bg); padding: 13px 28px;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: background 0.2s; white-space: nowrap;
+}
+.btn-primary:hover { background: #e8ff70; }
+.btn-secondary {
+  color: var(--white); padding: 13px 24px; font-size: 14px;
+  text-decoration: none; border: 1px solid var(--border-strong);
+  border-radius: 100px; transition: border-color 0.2s; white-space: nowrap;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Marquee */
+.marquee-wrap {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 1rem 0; overflow: hidden; white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block; animation: marquee 18s linear infinite;
+}
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 1.5rem;
+  font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); padding: 0 2rem;
+}
+.marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* Sections */
+.section { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3.5rem; }
+.section-num { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; }
+.section-title { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -0.01em; }
+.section-title em { font-style: italic; color: var(--accent); }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.about-text { font-size: 16px; color: #b0afa8; line-height: 1.8; }
+.about-text p + p { margin-top: 1rem; }
+.about-text strong { color: var(--white); font-weight: 500; }
+.skills-list { display: flex; flex-direction: column; gap: 10px; }
+.skill-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.875rem 1.25rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px;
+  transition: border-color 0.2s;
+}
+.skill-row:hover { border-color: var(--border-strong); }
+.skill-name { font-size: 14px; font-weight: 500; color: var(--white); }
+.skill-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.skill-tag { font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 20px; }
+
+/* Portfolio */
+.portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.portfolio-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  text-decoration: none; display: block;
+}
+.portfolio-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+.card-preview {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 52px; position: relative; overflow: hidden;
+}
+.card-preview.dark { background: #1a1008; }
+.card-preview.light { background: #f7f3ee; }
+.card-preview.electric { background: #080a0e; }
+.card-preview.sand { background: #f7f6f2; }
+.card-preview-label {
+  position: absolute; bottom: 12px; right: 12px;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.7);
+  padding: 3px 8px; border-radius: 20px; backdrop-filter: blur(4px);
+}
+.card-body { padding: 1.25rem 1.5rem 1.5rem; }
+.card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.card-tag {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+}
+.tag-dev { background: rgba(212,240,80,0.1); color: var(--accent); }
+.tag-design { background: rgba(184,144,80,0.15); color: #c89050; }
+.tag-copy { background: rgba(100,160,255,0.1); color: #80b0ff; }
+.card-title { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+.card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* Services */
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.service-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.service-card:hover { border-color: var(--border-strong); }
+.service-icon { font-size: 24px; margin-bottom: 1rem; }
+.service-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.service-desc { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 1rem; }
+.service-price { font-size: 18px; font-weight: 600; color: var(--accent); }
+.service-delivery { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* Contact */
+.contact-inner {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 4rem; text-align: center;
+}
+.contact-title { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 5vw, 60px); letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.1; }
+.contact-title em { font-style: italic; color: var(--accent); }
+.contact-sub { font-size: 15px; color: var(--muted); margin-bottom: 2.5rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+.contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #25d366; color: #fff; padding: 13px 28px;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: background 0.2s;
+}
+.btn-wa:hover { background: #20bd5a; }
+.platforms { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+.platform-link {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s;
+}
+.platform-link:hover { color: var(--white); }
+.platform-link::before { content: '↗'; font-size: 11px; }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border); padding: 2rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--white); }
+.footer-logo span { color: var(--accent); }
+.footer-copy { font-size: 12px; color: var(--muted); }
+
+/* Divider line */
+.full-divider { border: none; border-top: 1px solid var(--border); margin: 0 3rem; }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Mobile */
+@media (max-width: 768px) {
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 0 1.5rem 4rem; }
+  .section { padding: 4rem 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .contact-inner { padding: 2.5rem 1.5rem; }
+  footer { padding: 1.5rem; }
+  .full-divider { margin: 0 1.5rem; }
+  .hero-bg-text { display: none; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">UA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/923247733757" target="_blank" class="nav-cta">Hire me</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg-text">CREATIVE</div>
+  <div class="hero-tag">Available for freelance work</div>
+  <h1>Designer, developer<br>& <em>copywriter.</em></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">I build things that look good and convert — flyers, websites, and copy that actually lands. Based in Pakistan, working worldwide.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">View my work</a>
+      <a href="#contact" class="btn-secondary">Let's talk</a>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Development</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Copywriting</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Landing Pages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ad Copy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Flyer Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Fast Delivery</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Development</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Copywriting</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Landing Pages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ad Copy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Flyer Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Fast Delivery</span>
+  </div>
+</div>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About <em>me</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a multidisciplinary creative with a sharp eye for design, clean code, and copy that actually lands. Whether you need a <strong>scroll-stopping flyer</strong>, a <strong>fast-loading website</strong>, or <strong>words that sell</strong> — I bring all three to the table so you don't have to juggle multiple freelancers.</p>
+      <p>I work best with restaurants, startups, and small businesses that want quality work delivered fast and without the back-and-forth.</p>
+      <p style="margin-top:1.5rem; font-size:14px; color: var(--muted);">Quick communicator. Deadline-driven. Built different.</p>
+    </div>
+    <div class="skills-list reveal">
+      <div class="skill-row">
+        <span class="skill-name">Graphic Design</span>
+        <div class="skill-tags">
+          <span class="skill-tag">Flyers</span>
+          <span class="skill-tag">Branding</span>
+          <span class="skill-tag">Social</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Web Development</span>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">Landing pages</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Copywriting</span>
+        <div class="skill-tags">
+          <span class="skill-tag">Ads</span>
+          <span class="skill-tag">Websites</span>
+          <span class="skill-tag">Emails</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Platforms</span>
+        <div class="skill-tags">
+          <span class="skill-tag">Upwork</span>
+          <span class="skill-tag">Contra</span>
+          <span class="skill-tag">Fiverr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- Work -->
+<section class="section" id="work">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Selected <em>work</em></h2>
+  </div>
+  <div class="portfolio-grid">
+
+    <div class="portfolio-card reveal">
+      <div class="card-preview dark">
+        🥩
+        <span class="card-preview-label">Web + Copy</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="card-tag tag-dev">Web Dev</span>
+          <span class="card-tag tag-copy">Copywriting</span>
+        </div>
+        <p class="card-title">Zestro Restaurant</p>
+        <p class="card-desc">Full landing page for a wood-fired grill brand. Dark aesthetic, menu highlights, testimonials, and conversion CTA.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="card-preview light">
+        🌿
+        <span class="card-preview-label">Graphic Design</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="card-tag tag-design">Graphic Design</span>
+        </div>
+        <p class="card-title">Lumio Skincare Flyer</p>
+        <p class="card-desc">Print-ready promotional flyer for a minimalist skincare brand. Soft palette, clean type hierarchy, promo strip.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="card-preview electric">
+        💪
+        <span class="card-preview-label">Web + Design</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="card-tag tag-dev">Web Dev</span>
+          <span class="card-tag tag-design">UI Design</span>
+        </div>
+        <p class="card-title">Fuelr Fitness App</p>
+        <p class="card-desc">Bold landing page for a fitness tracking app. Phone mockup, feature breakdown, pricing, and free trial CTA.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-card reveal">
+      <div class="card-preview sand">
+        💰
+        <span class="card-preview-label">Copywriting</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="card-tag tag-copy">Copywriting</span>
+        </div>
+        <p class="card-title">Vault Finance Ad Pack</p>
+        <p class="card-desc">5 Facebook/Instagram ad variations for a fintech startup. Hooks, body copy, and CTAs across 5 different tones.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- Services -->
+<section class="section" id="services">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Services & <em>rates</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🎨</div>
+      <p class="service-name">Flyer Design</p>
+      <p class="service-desc">Print-ready flyer with PDF + PNG export. Perfect for promos, events, and menus.</p>
+      <p class="service-price">$15</p>
+      <p class="service-delivery">Delivered in 24 hrs</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📱</div>
+      <p class="service-name">Social Media Graphics</p>
+      <p class="service-desc">3 branded post graphics sized for Instagram, Facebook, and LinkedIn.</p>
+      <p class="service-price">$20</p>
+      <p class="service-delivery">Delivered in 24 hrs</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📦</div>
+      <p class="service-name">Brand Starter Pack</p>
+      <p class="service-desc">Logo (2 concepts) + flyer + brand colors & fonts guide. All in one.</p>
+      <p class="service-price">$75</p>
+      <p class="service-delivery">Delivered in 3 days</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">✍️</div>
+      <p class="service-name">Website Copy</p>
+      <p class="service-desc">Up to 3 pages of SEO-friendly copy — Home, About, Services.</p>
+      <p class="service-price">$30</p>
+      <p class="service-delivery">Delivered in 48 hrs</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🖥️</div>
+      <p class="service-name">Landing Page</p>
+      <p class="service-desc">Fully responsive, mobile-optimised landing page with contact form.</p>
+      <p class="service-price">$80</p>
+      <p class="service-delivery">Delivered in 3 days</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📣</div>
+      <p class="service-name">Ad Copy Pack</p>
+      <p class="service-desc">5 Facebook/Instagram ad variations — hook, body, and CTA for each.</p>
+      <p class="service-price">$20</p>
+      <p class="service-delivery">Delivered in 24 hrs</p>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="contact-inner reveal">
+    <h2 class="contact-title">Got a project?<br>Let's <em>make it.</em></h2>
+    <p class="contact-sub">Message me on WhatsApp and I'll get back to you within a few hours. No lengthy briefs needed — just tell me what you need.</p>
+    <div class="contact-btns">
+      <a href="https://wa.me/923247733757" target="_blank" class="btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp me
+      </a>
+      <a href="#services" class="btn-secondary">View services</a>
+    </div>
+    <div class="platforms">
+      <a href="https://www.upwork.com" target="_blank" class="platform-link">Upwork</a>
+      <a href="https://contra.com" target="_blank" class="platform-link">Contra</a>
+      <a href="https://www.fiverr.com" target="_blank" class="platform-link">Fiverr</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Umair Afzaal<span>.</span></div>
+  <div class="footer-copy">Designer · Developer · Copywriter · Pakistan</div>
+  <div class="footer-copy">© 2025 — All rights reserved</div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+animRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2)'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)'; ring.style.opacity = '0.3'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '1'; });
+});
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); });
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
